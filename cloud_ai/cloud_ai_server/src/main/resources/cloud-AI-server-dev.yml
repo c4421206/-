@@ -1,0 +1,74 @@
+spring:
+  datasource:
+    name: AIDB
+    url: jdbc:mysql://192.168.1.185:3306/cloud_ai?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: ming8858
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+    druid:
+#     监控后台账号和密码
+      stat-view-servlet:
+        login-username: admin
+        login-password: charsming619
+
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
+
+
+
+ai:
+  # AI技术类型
+  type: baidu
+#  语音听写
+  voiceDictation:
+    xfyun:
+      serviceURL: http://api.xfyun.cn/v1/service/v1/iat
+      apiKey: 9b846cc2448ae75c524065a93c629ca0
+      appId: 5b10f21f
+      secretKey:
+#  语音合成
+  phoneticContract:
+    xfyun:
+      serviceURL: http://api.xfyun.cn/v1/service/v1/tts
+      apiKey: ecb60622a3701681ba267e77457ffe6d
+      appId: 5b10f21f
+      secretKey:
+#  语义识别
+  semantic:
+    xfyun:
+  #    语义识别地址，使用的讯飞语义识别
+      serviceURL: http://openapi.xfyun.cn/v2/aiui
+  #    讯飞语义识别key
+      apiKey: 923dd32ee75243ecba74573b18e51ff4
+      appId: 5b10f21f
+      secretKey:
+
+#  百度语音认证信息
+  baidu:
+#    网络连接参数
+    connectionTimeout: 2000
+    socketTimeout: 60000
+    auth:
+      appId: 11370855
+      apiKey: 2fYOlYNUyKaHxnbXwB1i7Xsm
+      secretKey: hZZkf1TkFlAxOZVhzwlRgf5znZYO6sYR
+#      理解与交互技术服务地址
+      serviceURL: https://aip.baidubce.com/rpc/2.0/unit/bot/chat

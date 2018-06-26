@@ -1,0 +1,14 @@
+server:
+  port: 8761
+eureka:
+  server:
+#    不开启自我保护
+    enable-self-preservation: false
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+spring:
+  application:
+    name: cloud_center

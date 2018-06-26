@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.clouddo</groupId>
+		<artifactId>cloud_commons</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>cloud_commons_kettle</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<!--、  6.1.0.1-196-->
+	<properties>
+		<pentaho-kettle.version>5.4.1.8-209</pentaho-kettle.version>
+
+		<kettle.version>9.0.0.0-SNAPSHOT</kettle.version>
+	</properties>
+
+	<name>cloud_commons_kettle</name>
+	<description>kettle工具包</description>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-core</artifactId>
+			<version>${kettle.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.verhas</groupId>
+			<artifactId>license3j</artifactId>
+			<version>1.0.7</version>
+		</dependency>
+		<dependency>
+			<groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-dbdialog</artifactId>
+			<version>${kettle.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>pentaho-kettle</groupId>
+			<artifactId>kettle-engine</artifactId>
+			<version>${kettle.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>pentaho</groupId>
+			<artifactId>metastore</artifactId>
+			<version>${kettle.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
+
+
+		<!--common工具包-->
+		<dependency>
+			<groupId>com.clouddo</groupId>
+			<artifactId>cloud_commons_common</artifactId>
+			<version>${cloud_commons_common.version}</version>
+		</dependency>
+	</dependencies>
+
+
+
+
+	<repositories>
+		<!--kettle maven仓库-->
+
+		<repository>
+			<id>pentaho-releases</id>
+			<url>http://nexus.pentaho.org/content/groups/omni</url>
+			<!--<url>http://repository.pentaho.org/artifactory/repo/</url>-->
+		</repository>
+	</repositories>
+
+
+</project>

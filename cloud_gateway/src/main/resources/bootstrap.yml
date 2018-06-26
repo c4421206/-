@@ -1,0 +1,49 @@
+#配置中心相关配置必须放在bootstrap文件中，
+#因为springboot的加载顺序为bootstrap文件、配置中心配置、application文件中
+spring:
+  application:
+    name: cloud-gateway
+
+  cloud:
+    config:
+      label: master
+      discovery:
+        enabled: true
+        service-id: cloud_config
+  profiles:
+    active: dev
+#      profile: dev
+
+
+eureka:
+  client:
+    serviceUrl:
+#      服务中心地址
+      defaultZone: http://charsming.f3322.org:8761/eureka/
+server:
+  port: 8080
+
+auth:
+  client:
+#    客户端的ID密码
+    id: cloud-gateway
+    secret: cloud123456
+zuul:
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 10000
+
+ribbon:
+  ReadTimeout: 10000
+  SocketTimeout: 10000
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 40000
+

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clouddo.ai.server.mapper.CloudIntentMapper">
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		cloud_intent
+	</sql>
+
+
+	<!--查询所有-->
+	<select id="list" resultMap="cloudIntentResultMap" parameterType="map">
+        SELECT * FROM <include refid="tableName"></include> A
+        <where>
+			<if test="intentId != null and intentId != ''">
+				AND A.INTENT_ID LIKE '%${intentId}%'
+			</if>
+			<if test="intentName != null and intentName != ''">
+				AND A.INTENT_NAME LIKE '%${intentName}%'
+			</if>
+			<if test="type != null and type != ''">
+				AND A.TYPE LIKE '%${type}%'
+			</if>
+			<if test="alias != null and alias != ''">
+				AND A.ALIAS LIKE '%${alias}%'
+			</if>
+			<if test="description != null and description != ''">
+				AND A.DESCRIPTION LIKE '%${description}%'
+			</if>
+			<if test="operationType != null and operationType != ''">
+				AND A.OPERATION_TYPE LIKE '%${operationType}%'
+			</if>
+			<if test="operation != null and operation != ''">
+				AND A.OPERATION LIKE '%${operation}%'
+			</if>
+			<if test="botId != null and botId != ''">
+				AND A.BOT_ID LIKE '%${botId}%'
+			</if>
+
+			<!-- 关键词查询 -->
+			<if test="keyword != null and keyword != ''">
+				AND (
+				A.INTENT_ID LIKE '%${keyword}%'
+
+				OR A.INTENT_NAME LIKE '%${keyword}%'
+
+				OR A.TYPE LIKE '%${keyword}%'
+
+				OR A.ALIAS LIKE '%${keyword}%'
+
+				OR A.DESCRIPTION LIKE '%${keyword}%'
+
+				OR A.OPERATION_TYPE LIKE '%${keyword}%'
+
+				OR A.OPERATION LIKE '%${keyword}%'
+
+				OR A.BOT_ID LIKE '%${keyword}%'
+
+			)
+			</if>
+		</where>
+    </select>
+
+	<!--删除操作-->
+	<delete id="delete" parameterType="list">
+        DELETE FROM <include refid="tableName"></include>
+        WHERE
+        <choose>
+            <when test="list != null and list.size() > 0">
+                <foreach collection="list" item="item" separator="or">
+					(
+					INTENT_ID = #{item.intentId}
+					)
+                </foreach>
+            </when>
+            <otherwise>
+            	AND INTENT_ID = '@@@@@abc'
+            </otherwise>
+        </choose>
+    </delete>
+
+	<!--查询操作-->
+	<select id="get" resultMap="cloudIntentResultMap">
+        SELECT * FROM <include refid="tableName"></include>
+        WHERE
+		INTENT_ID = #{intentId}
+    </select>
+
+	<!--查询意图信息和意图对应的词条信息-->
+	<select id="getWithSolts" resultMap="cloudIntentResultMap">
+		SELECT * FROM cloud_intent_slot A
+		LEFT JOIN <include refid="tableName"></include> B ON A.INTENT_ID = B.INTENT_ID
+		LEFT JOIN cloud_slot C ON A.SLOT_ID = C.SLOT_ID
+		<where>
+			<if test="intentId != null and intentId != ''">
+				AND INTENT_ID = #{intentId}
+			</if>
+			<if test="intentName != null and intentName != ''">
+				AND INTENT_NAME = #{intentName}
+			</if>
+		</where>
+	</select>
+
+	<!--批量插入操作-->
+	<insert id="batchInsert" parameterType="list">
+        <if test="list != null and list.size() > 0">
+            INSERT INTO <include refid="tableName"></include>
+            ( <include refid="tableFields"></include>
+            ) VALUES
+            <foreach collection="list" item="item" separator=",">
+                (<include refid="classFields"></include> )
+            </foreach>
+        </if>
+
+    </insert>
+
+	<!--批量更新操作-->
+	<update id="batchUpdate" parameterType="list">
+        <if test="list != null">
+            <foreach collection="list" item="item">
+                UPDATE <include refid="tableName"></include>
+                SET
+    			INTENT_NAME 		= 		#{item.intentName},
+    			TYPE 		= 		#{item.type},
+    			ALIAS 		= 		#{item.alias},
+    			DESCRIPTION 		= 		#{item.description},
+    			OPERATION_TYPE 		= 		#{item.operationType},
+    			OPERATION 		= 		#{item.operation},
+    			BOT_ID 		= 		#{item.botId}
+				<where>
+						and INTENT_ID = #{item.intentId}
+				</where>
+				;
+            </foreach>
+        </if>
+    </update>
+
+    <!-- 实体映射 -->
+    <resultMap type="com.clouddo.ai.server.model.CloudIntentDO" id="cloudIntentResultMap">
+    	<!-- id -->
+		<!-- 意图主键 -->
+		<id column="INTENT_ID" property="intentId"/>
+			<!-- column -->
+		<!-- 意图名称 -->
+		<result column="INTENT_NAME" property="intentName"/>
+		<!-- 意图类型 -->
+		<result column="TYPE" property="type"/>
+		<!-- 意图别名，使用逗号分开 -->
+		<result column="ALIAS" property="alias"/>
+		<!-- 意图描述 -->
+		<result column="DESCRIPTION" property="description"/>
+		<!-- 操作类型（URL跳转，查询） -->
+		<result column="OPERATION_TYPE" property="operationType"/>
+		<!-- 操作 -->
+		<result column="OPERATION" property="operation"/>
+		<!-- 意图所属bot的主键 -->
+		<result column="BOT_ID" property="botId"/>
+
+		<!--意图对应的词槽信息-->
+		<collection property="cloudSlotList" resultMap="cloudSlotResultMap"></collection>
+    </resultMap>
+
+	<!-- 词槽实体映射 -->
+	<resultMap type="com.clouddo.ai.server.model.CloudSlotDO" id="cloudSlotResultMap">
+		<!-- id -->
+		<!-- 词槽主键 -->
+		<id column="SLOT_ID" property="slotId"/>
+		<!-- column -->
+		<!-- 词槽名称 -->
+		<result column="SLOT_NAME" property="slotName"/>
+		<!-- 格式化名称 -->
+		<result column="FORMAT_NAME" property="formatName"/>
+		<!-- 词槽别名，使用逗号分开 -->
+		<result column="ALIAS" property="alias"/>
+		<!-- 词槽描述 -->
+		<result column="DESCRIPTION" property="description"/>
+		<!-- 格式化值对应的class的限定名 -->
+		<result column="FORMAT_VALUE_CLASS" property="formatValueClass"/>
+		<!-- 格式化值对应的方法名 -->
+		<result column="FORMAT_VALUE_METHOD" property="formatValueMethod"/>
+	</resultMap>
+    
+    <!-- 字段 -->
+	<sql id="tableFields">
+    		INTENT_ID,
+    		INTENT_NAME,
+    		TYPE,
+    		ALIAS,
+    		DESCRIPTION,
+    		OPERATION_TYPE,
+    		OPERATION,
+    		BOT_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="classFields">
+			#{item.intentId},
+			#{item.intentName},
+			#{item.type},
+			#{item.alias},
+			#{item.description},
+			#{item.operationType},
+			#{item.operation},
+			#{item.botId}
+	</sql>
+    		
+</mapper>
+
+

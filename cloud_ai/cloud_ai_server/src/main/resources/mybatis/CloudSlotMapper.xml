@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clouddo.ai.server.mapper.CloudSlotMapper">
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		cloud_slot
+	</sql>
+
+
+	<!--查询所有-->
+	<select id="list" resultMap="cloudSlotResultMap" parameterType="map">
+        SELECT * FROM <include refid="tableName"></include> A
+        <where>
+			<if test="slotId != null and slotId != ''">
+				AND A.SLOT_ID LIKE '%${slotId}%'
+			</if>
+			<if test="slotName != null and slotName != ''">
+				AND A.SLOT_NAME LIKE '%${slotName}%'
+			</if>
+			<if test="formatName != null and formatName != ''">
+				AND A.FORMAT_NAME LIKE '%${formatName}%'
+			</if>
+			<if test="alias != null and alias != ''">
+				AND A.ALIAS LIKE '%${alias}%'
+			</if>
+			<if test="description != null and description != ''">
+				AND A.DESCRIPTION LIKE '%${description}%'
+			</if>
+			<if test="formatValueClass != null and formatValueClass != ''">
+				AND A.FORMAT_VALUE_CLASS LIKE '%${formatValueClass}%'
+			</if>
+			<if test="formatValueMethod != null and formatValueMethod != ''">
+				AND A.FORMAT_VALUE_METHOD LIKE '%${formatValueMethod}%'
+			</if>
+
+			<!-- 关键词查询 -->
+			<if test="keyword != null and keyword != ''">
+				AND (
+				A.SLOT_ID LIKE '%${keyword}%'
+
+				OR A.SLOT_NAME LIKE '%${keyword}%'
+
+				OR A.FORMAT_NAME LIKE '%${keyword}%'
+
+				OR A.ALIAS LIKE '%${keyword}%'
+
+				OR A.DESCRIPTION LIKE '%${keyword}%'
+
+				OR A.FORMAT_VALUE_CLASS LIKE '%${keyword}%'
+
+				OR A.FORMAT_VALUE_METHOD LIKE '%${keyword}%'
+
+			)
+			</if>
+		</where>
+    </select>
+
+	<!--删除操作-->
+	<delete id="delete" parameterType="list">
+        DELETE FROM <include refid="tableName"></include>
+        WHERE
+        <choose>
+            <when test="list != null and list.size() > 0">
+                <foreach collection="list" item="item" separator="or">
+					(
+					SLOT_ID = #{item.slotId}
+					)
+                </foreach>
+            </when>
+            <otherwise>
+            	AND SLOT_ID = '@@@@@abc'
+            </otherwise>
+        </choose>
+    </delete>
+
+	<!--查询操作-->
+	<select id="get" resultMap="cloudSlotResultMap">
+        SELECT * FROM <include refid="tableName"></include>
+        WHERE
+		SLOT_ID = #{slotId}
+    </select>
+
+	<!--批量插入操作-->
+	<insert id="batchInsert" parameterType="list">
+        <if test="list != null and list.size() > 0">
+            INSERT INTO <include refid="tableName"></include>
+            ( <include refid="tableFields"></include>
+            ) VALUES
+            <foreach collection="list" item="item" separator=",">
+                (<include refid="classFields"></include> )
+            </foreach>
+        </if>
+
+    </insert>
+
+	<!--批量更新操作-->
+	<update id="batchUpdate" parameterType="list">
+        <if test="list != null">
+            <foreach collection="list" item="item">
+                UPDATE <include refid="tableName"></include>
+                SET
+    			SLOT_NAME 		= 		#{item.slotName},
+    			FORMAT_NAME 		= 		#{item.formatName},
+    			ALIAS 		= 		#{item.alias},
+    			DESCRIPTION 		= 		#{item.description},
+    			FORMAT_VALUE_CLASS 		= 		#{item.formatValueClass},
+    			FORMAT_VALUE_METHOD 		= 		#{item.formatValueMethod}
+				<where>
+						and SLOT_ID = #{item.slotId}
+				</where>
+				;
+            </foreach>
+        </if>
+    </update>
+
+    <!-- 实体映射 -->
+    <resultMap type="com.clouddo.ai.server.model.CloudSlotDO" id="cloudSlotResultMap">
+    	<!-- id -->
+		<!-- 词槽主键 -->
+		<id column="SLOT_ID" property="slotId"/>
+			<!-- column -->
+		<!-- 词槽名称 -->
+		<result column="SLOT_NAME" property="slotName"/>
+		<!-- 格式化名称 -->
+		<result column="FORMAT_NAME" property="formatName"/>
+		<!-- 词槽别名，使用逗号分开 -->
+		<result column="ALIAS" property="alias"/>
+		<!-- 词槽描述 -->
+		<result column="DESCRIPTION" property="description"/>
+		<!-- 格式化值对应的class的限定名 -->
+		<result column="FORMAT_VALUE_CLASS" property="formatValueClass"/>
+		<!-- 格式化值对应的方法名 -->
+		<result column="FORMAT_VALUE_METHOD" property="formatValueMethod"/>
+    </resultMap>
+    
+    <!-- 字段 -->
+	<sql id="tableFields">
+    		SLOT_ID,
+    		SLOT_NAME,
+    		FORMAT_NAME,
+    		ALIAS,
+    		DESCRIPTION,
+    		FORMAT_VALUE_CLASS,
+    		FORMAT_VALUE_METHOD
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="classFields">
+			#{item.slotId},
+			#{item.slotName},
+			#{item.formatName},
+			#{item.alias},
+			#{item.description},
+			#{item.formatValueClass},
+			#{item.formatValueMethod}
+	</sql>
+    		
+</mapper>
+
+

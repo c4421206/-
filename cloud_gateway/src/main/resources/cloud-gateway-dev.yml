@@ -1,0 +1,30 @@
+zuul:
+  SendErrorFilter:
+    post:
+      disable: false
+#  解决重定向
+  add-host-header: true
+  routes:
+#    system服务跳转
+    system:
+      path: /system/**
+      serviceId: cloud-system
+#    认证中心服务跳转
+    auth:
+      path: /auth/**
+      serviceId: cloud-auth
+#    ai服务跳转
+    AI:
+      path: /ai/**
+      serviceId: cloud-AI-server
+
+  prefix: /cloud
+  host:
+    connect-timeout-millis: 6000
+    socket-timeout-millis: 6000
+#  防止token请求头被过滤
+  sensitive-headers:
+
+gate:
+  ignore:
+    startWith: /static,/auth,/system/login,/ai
