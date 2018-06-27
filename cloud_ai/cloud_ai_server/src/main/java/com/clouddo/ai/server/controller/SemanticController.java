@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 语义识别工具类
+ * 语音交互controller
  * @author zhongming
  * @since 3.0
  * 2018/6/1下午4:23
@@ -81,7 +81,7 @@ public class SemanticController extends AuthController {
         try {
             String conversationId = (String) parameters.get("conversationId");
             String message = (String) parameters.get("message");
-            String bootId = (String) parameters.get("bootId");
+            String bootId = (String) parameters.get("botId");
             Conversation conversation = baiduUnitUtil.conversation(conversationId, message, bootId);
             return Result.success(conversation.getSimpleData());
         } catch (Exception e) {

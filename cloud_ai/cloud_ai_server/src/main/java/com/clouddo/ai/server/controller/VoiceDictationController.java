@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 
 /**
- * 语音听写服务层
+ * 语音识别controller
  * @author zhongming
  * @since 3.0
  * 2018/6/6下午2:25

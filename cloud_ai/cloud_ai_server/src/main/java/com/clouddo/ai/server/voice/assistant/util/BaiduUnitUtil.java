@@ -106,6 +106,7 @@ public class BaiduUnitUtil {
                 LOGGER.debug("语音解析完毕，开始解析去数据库请求数据解析");
                 //设置最终动作话语
                 conversation.setMessage(responseModel.getFirstActionSay());
+                conversation.setStatus(ConversationStatus.satisfy.name());
                 //开始解析
                 conversation = this.intentAnalysis(conversation);
             }
