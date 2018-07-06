@@ -94,7 +94,7 @@ var com;
                     for (var _i = 3; _i < arguments.length; _i++) {
                         successCallbackParameters[_i - 3] = arguments[_i];
                     }
-                    if (data.code == "SUCCESS") {
+                    if (data.code == 200) {
                         if (success != null) {
                             //执行回调函数
                             success.apply(void 0, [data.data].concat(successCallbackParameters));

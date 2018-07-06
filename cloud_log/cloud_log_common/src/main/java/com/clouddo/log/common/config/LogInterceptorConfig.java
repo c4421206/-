@@ -20,7 +20,10 @@ public class LogInterceptorConfig implements WebMvcConfigurer {
         return new LogInterceptor();
     }
 
-    //添加日志拦截器
+    /**
+     * 配置日志拦截器
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(logInterceptor()).addPathPatterns("/**");

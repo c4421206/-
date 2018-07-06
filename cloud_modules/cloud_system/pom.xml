@@ -63,6 +63,12 @@
 			<artifactId>cloud_log_common</artifactId>
 			<version>${cloud_log_common.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.clouddo</groupId>
+			<artifactId>cloud_commons_meteo</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 

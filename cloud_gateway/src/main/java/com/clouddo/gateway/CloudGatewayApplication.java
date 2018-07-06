@@ -1,21 +1,26 @@
 package com.clouddo.gateway;
 
+import com.cloudd.commons.auth.config.AuthCommonImport;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
+
+/**
+ * 网关启动类
+ * 引入认证包 AuthCommonImport.class
+ * @author zhongming
+ * @since 1.0
+ * 2018-07-02 14:57
+ */
 @SpringBootApplication
 @EnableEurekaClient  //服务提供者
 @EnableZuulProxy //服务网关
-@ComponentScan({
-		//本项目
-		"com.clouddo.gateway",
-		//config包
-		"com.cloudd.commons.auth.config",
-		//common config
-		"com.clouddo.commons.common.config"
+
+@Import({
+		AuthCommonImport.class
 })
 public class CloudGatewayApplication {
 

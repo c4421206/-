@@ -184,6 +184,11 @@ public class BaiduUnitUtil {
         cloudIntent = this.cloudIntentService.getWithSolts(cloudIntent);
 
 
+        if(cloudIntent == null) {
+            return conversation;
+        }
+
+
         //格式化后的词槽信息
         List<SlotDto> soltDtoList = new ArrayList<SlotDto>();
 

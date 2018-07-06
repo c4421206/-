@@ -1,14 +1,12 @@
 package com.cloudd.commons.auth.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户认证相关信息.
  */
-@Component
 public class UserAuthConfig {
 
     //用户公钥路径
@@ -25,6 +23,8 @@ public class UserAuthConfig {
     //token在请求头中的key
     @Value("${auth.user.token-header}")
     private String tokenHeader;
+
+
 
     public String getTokenHeader() {
         return tokenHeader;

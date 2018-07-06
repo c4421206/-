@@ -81,7 +81,7 @@ namespace com.cloudo.util {
 
         //默认的成功回调函数
         private static defalutSuccessFunction(data : any, success : Function, error : Function, ...successCallbackParameters) {
-            if (data.code == "SUCCESS") {
+            if (data.code == 200) {
                 if (success != null) {
                     //执行回调函数
                     success(data.data,  ...successCallbackParameters);

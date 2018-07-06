@@ -1,3 +1,14 @@
+
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  thumb-image:
+    width: 150
+    height: 150
+  tracker-lists: 192.168.1.114:22122
+
+
+
 qiniu:
 #  七牛云认证信息
   auth:
@@ -12,7 +23,7 @@ qiniu:
 
 spring:
   datasource:
-    name: AIDB
+    name: fileserverDB
     url: jdbc:mysql://192.168.1.185:3306/cloud_file?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: ming8858

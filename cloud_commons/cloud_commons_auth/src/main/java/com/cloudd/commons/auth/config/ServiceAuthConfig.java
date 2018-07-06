@@ -1,14 +1,12 @@
 package com.cloudd.commons.auth.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * 服务端认证相关信息
  */
-@Component
 public class ServiceAuthConfig {
     @Value("${auth.client.pub-key.path}")
     private String pubKeyPath;

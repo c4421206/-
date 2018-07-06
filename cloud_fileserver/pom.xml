@@ -42,6 +42,13 @@
 			<version>[7.2.0, 7.2.99]</version>
 		</dependency>
 
+		<!--引入fastfds支持-->
+		<dependency>
+			<groupId>com.github.tobato</groupId>
+			<artifactId>fastdfs-client</artifactId>
+			<version>1.26.2</version>
+		</dependency>
+
 
 		<!--引入数据库支持-->
 		<!--mybatis支持-->

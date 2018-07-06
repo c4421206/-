@@ -29,6 +29,7 @@
 			<groupId>com.clouddo</groupId>
 			<artifactId>cloud_commons_common</artifactId>
 			<version>${cloud_commons_common.version}</version>
+			<!--<version>0.0.1-SNAPSHOT</version>-->
 		</dependency>
 
 		<dependency>

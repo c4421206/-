@@ -3,6 +3,7 @@ package com.clouddo.fileserver.controller;
 import com.cloudd.commons.auth.controller.AuthController;
 import com.clouddo.fileserver.service.FileDownService;
 import com.clouddo.fileserver.service.FileUploadService;
+import com.github.tobato.fastdfs.service.TrackerClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ public class UploadController extends AuthController {
     @Autowired
     @Qualifier("qiniuFileDownServiceImpl")
     private FileDownService fileDownService;
+
+    @Autowired
+    private TrackerClient trackerClient;
 
     @PostMapping("/test")
     @ResponseBody

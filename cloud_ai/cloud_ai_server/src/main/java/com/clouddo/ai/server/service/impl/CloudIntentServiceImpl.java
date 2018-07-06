@@ -139,11 +139,13 @@ public class CloudIntentServiceImpl implements CloudIntentService {
     @Override
     public CloudIntentDO getWithSolts(CloudIntentDO cloudIntent) {
         cloudIntent = this.cloudIntentMapper.getWithSolts(cloudIntent);
-        //将词槽信息放入map中
-        List<CloudSlotDO> cloudSlotList = cloudIntent.getCloudSlotList();
-        if(cloudSlotList != null && cloudSlotList.size() > 0) {
-            for(CloudSlotDO cloudSlot : cloudSlotList) {
-                cloudIntent.getCloudSlotMap().put(cloudSlot.getSlotName(), cloudSlot);
+        if(cloudIntent != null) {
+            //将词槽信息放入map中
+            List<CloudSlotDO> cloudSlotList = cloudIntent.getCloudSlotList();
+            if(cloudSlotList != null && cloudSlotList.size() > 0) {
+                for(CloudSlotDO cloudSlot : cloudSlotList) {
+                    cloudIntent.getCloudSlotMap().put(cloudSlot.getSlotName(), cloudSlot);
+                }
             }
         }
         return cloudIntent;

@@ -25,6 +25,8 @@ zuul:
 #  防止token请求头被过滤
   sensitive-headers:
 
+
 gate:
   ignore:
-    startWith: /static,/auth,/system/login,/ai
+#    不进行用户登录过滤
+    startWith: /static,/auth,/system/login,/system/test,/ai

@@ -68,15 +68,15 @@
 
 
 
-	<repositories>
-		<!--kettle maven仓库-->
+	<!--<repositories>-->
+		<!--&lt;!&ndash;kettle maven仓库&ndash;&gt;-->
 
-		<repository>
-			<id>pentaho-releases</id>
-			<url>http://nexus.pentaho.org/content/groups/omni</url>
-			<!--<url>http://repository.pentaho.org/artifactory/repo/</url>-->
-		</repository>
-	</repositories>
+		<!--<repository>-->
+			<!--<id>pentaho-releases</id>-->
+			<!--<url>http://nexus.pentaho.org/content/groups/omni</url>-->
+			<!--&lt;!&ndash;<url>http://repository.pentaho.org/artifactory/repo/</url>&ndash;&gt;-->
+		<!--</repository>-->
+	<!--</repositories>-->
 
 
 </project>

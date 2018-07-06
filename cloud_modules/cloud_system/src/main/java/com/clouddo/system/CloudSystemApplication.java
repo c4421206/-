@@ -1,21 +1,23 @@
 package com.clouddo.system;
 
+import com.cloudd.commons.auth.config.AuthCommonImport;
+import com.clouddo.log.common.config.LogCommonImport;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
+/**
+ * 引入认证工具包配置AuthCommonImport.class
+ * 引入日志工具包配置LogCommonImport.class
+ * @author zhongming
+ * @since 1.0
+ */
 @SpringBootApplication
 @EnableEurekaClient		//服务提供者
-@ComponentScan(basePackages = {
-		"com.clouddo.system",
-		"com.cloudd.commons.auth.config",	//权限配置
-		//配置权限相关拦截器（session拦截器，用户拦截器、服务拦截器）
-		"com.cloudd.commons.auth.interceptor",
-		//common包服务
-		"com.clouddo.commons.common.service",
-        //日志服务扫描
-        "com.clouddo.log.common.config"
+@Import({
+		AuthCommonImport.class,
+		LogCommonImport.class
 })
 public class CloudSystemApplication {
 
